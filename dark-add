@@ -1,0 +1,51 @@
+#!/usr/bin/env sh
+
+# https://stackoverflow.com/questions/42245288/add-new-element-to-existing-json-array-with-jq
+# https://stackoverflow.com/questions/50533182/how-do-i-remove-elements-from-array-in-a-json-object-containing-a-value
+
+if [ -z "$2" ]; then
+    echo "Not enough arguments. Enter a mode (a/d) followed by URL(s)." >&2
+    exit 1
+fi
+
+if [ ! "$1" = "a" ] && [ ! "$1" = "d" ]; then
+    echo "Enter a valid mode (a/d)." >&2
+    exit 1
+fi
+
+mode="$1"
+shift
+
+dark_path="${XDG_CONFIG_HOME:-$HOME/.config}/wal/templates"
+
+mkdir "/tmp/dark-add" || exit $?
+
+sed -e 's/{{/{/g' -e 's/}}/}/g' "$dark_path"/DarkReader.json > "/tmp/dark-add/one.json"
+
+case "$mode" in
+    a)
+        for url in "$@"; do
+            if [ "$(jq '.disabledFor | any(. == "'"$url"'")' "/tmp/dark-add/one.json")" = "true" ]; then
+                echo "$url is already listed. Nothing to do." >&2
+                continue
+            fi
+            jq '.disabledFor += ["'"$url"'"]' "/tmp/dark-add/one.json" > "/tmp/dark-add/two.json"
+            mv -f "/tmp/dark-add/two.json" "/tmp/dark-add/one.json"
+        done
+    ;;
+    d)
+        for url in "$@"; do
+            if [ "$(jq '.disabledFor | any(. == "'"$url"'")' "/tmp/dark-add/one.json")" = "false" ]; then
+                echo "$url was not listed. Nothing to do." >&2
+                continue
+            fi
+            jq 'del(.disabledFor[] | select(. == "'"$url"'"))' "/tmp/dark-add/one.json" > "/tmp/dark-add/two.json"
+            mv -f "/tmp/dark-add/two.json" "/tmp/dark-add/one.json"
+        done
+    ;;
+esac
+
+sed -e 's/{/{{/g' -e 's/}/}}/g' -e 's/{{color0}}/{color0}/' -e 's/{{color15}}/{color15}/' -e 's/{{color0.lighten(15%)}}/{color0.lighten(15%)}/' "/tmp/dark-add/one.json" > "/tmp/dark-add/two.json"
+
+mv -f "/tmp/dark-add/two.json" "$dark_path"/DarkReader.json
+rm -r "/tmp/dark-add"
