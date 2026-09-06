@@ -32,7 +32,7 @@ my mp3 player requires my mp3's album art to be a perfectly square jpg. this scr
 
 ### usage
 
-the first argument is an image file for the album art (set it to `-` if you want to use album art embedded in the audio/video file), and the second argument is the audio/video file. the output will be an mp3 file regardless of the input.
+the first argument is an image file for the album art (set it to `-` if you want to use album art embedded in the audio/video file), and the second argument is the audio/video file. an optional third argument sets the third argument of `crop-img` (see above). the output will be an mp3 file regardless of the input.
 
 `mus-img - 'song.mp3'`
 
