@@ -11,6 +11,7 @@ the first argument is a mode, and the following arguments should be URLs.
 #### modes:
 
 a - adds urls
+
 d - deletes urls
 
 `dark-add a 'google.com'`
