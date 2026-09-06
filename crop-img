@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+type="$(file -Lb --mime-type "$1")"
+if [ "$type" = "${type#image}" ]; then
+    echo "First argument must be an image file." >&2
+    exit 1
+fi
+
+width=$(magick identify -format "%w\n" "$1")
+height=$(magick identify -format "%h\n" "$1")
+
+if [ $width -lt $height ]; then
+    dim=$width
+else
+    dim=$height
+fi
+
+magick "$1" -gravity ${3:-Center} -crop "$dim"x"$dim"+0+0 +repage "$2"

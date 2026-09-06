@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+
+# https://stackoverflow.com/questions/18710992/how-to-add-album-art-with-ffmpeg
+# https://stackoverflow.com/questions/13592709/retrieve-album-art-using-ffmpeg
+
+if [ -z "$2" ]; then
+    echo "Must have two arguments (image followed by music file)." >&2
+    exit 1
+fi
+
+if [ "$1" = "-" ]; then
+    type="$(file -Lb --mime-type "$2")"
+    if [ ! "$type" = "${type#audio}" ]; then
+        ffmpeg -i "$2" -an -vcodec copy cover.jpg || exit $?
+    elif [ ! "$type" = "${type#video}" ]; then
+        ffmpegthumbnailer -i "$2" -c jpg -s 0 -o cover.jpg
+    else
+        echo "Second argument must be an audio or video file." >&2
+        exit 1
+    fi
+    img="cover.jpg"
+else
+    type="$(file -Lb --mime-type "$1")"
+    if [ "$type" = "${type#image}" ]; then
+        echo "First argument must be an image file." >&2
+        exit 1
+    fi
+    img="$1"
+fi
+
+crop-img "$img" "out.jpg" ${3:-Center} || exit $?
+
+ffmpeg -i "$2" -i out.jpg -map 0:a -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Front Cover" -metadata:s:v comment="Cover (front)" "${2%.*}1.mp3"
+
+
+[ -f cover.jpg ] && rm cover.jpg
+
+if [ $(command -v trash-put) ]; then
+    trash-put "$2"
+    mv "${2%.*}1.mp3" "${2%.*}.mp3"
+    trash-put out.jpg
+fi
