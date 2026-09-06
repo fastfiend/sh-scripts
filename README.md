@@ -28,7 +28,7 @@ the first argument is the name of an image file, and the second argument is the 
 
 ## mus-img
 
-my mp3 player requires my mp3's album art to be a perfect square. this script does that for me :)
+my mp3 player requires my mp3's album art to be a perfectly square jpg. this script does that for me :)
 
 ### usage
 
