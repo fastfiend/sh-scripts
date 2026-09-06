@@ -36,4 +36,4 @@ the first argument is an image file for the album art (set it to `-` if you want
 
 `mus-img - 'song.mp3'`
 
-`mus-img 'art.png' 'song.mp3`
+`mus-img 'art.png' 'song.mp3'`
