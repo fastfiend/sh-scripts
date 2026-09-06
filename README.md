@@ -6,7 +6,7 @@ a script that adds/removes urls from my DarkReader.json pywal16 template disable
 
 ### usage:
 
-the first argument is a mode, and the following arguments should be URLs.
+the first argument is a mode, and the following arguments should be urls.
 
 #### modes:
 
