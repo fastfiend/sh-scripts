@@ -23,7 +23,7 @@ a script that crops an image into a perfect square, because i needed that functi
 
 the first argument is the name of an image file, and the second argument is the name of the expected output. the third argument optionally allows you to specify the -gravity of the image magick cropping (https://imagemagick.org/command-line-options/#gravity&gsc.tab=0) (Center by default)
 
-`crop-img "in.png" "out.png" East`
+`crop-img 'in.png' 'out.png' East`
 
 ## mus-img
 
