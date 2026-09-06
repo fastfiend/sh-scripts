@@ -31,6 +31,6 @@ my mp3 player requires my mp3's album art to be a perfect square. this script do
 
 ### usage
 
-the first argument is an image file for the album art (set it to `-` if you want to use album art embedded in the audio/video file), and the second argument is the audio/video file. the output will be an mp3 file regardless of the input.
+the first argument is an image file for the album art (set it to `-` if you want to use album art embedded in the audio file), and the second argument is the audio/video file. the output will be an mp3 file regardless of the input.
 
 `mus-img - song.mp3`
