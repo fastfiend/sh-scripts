@@ -2,7 +2,7 @@ sh scripts i made to make my life easier
 
 ## dark-add
 
-a script that adds/removes urls from my DarkReader.json pywal16 template (derived from https://github.com/eylles/pywal-extra/blob/master/templates/darkreader/darkreader.json), because adding them manually is a huge pain
+a script that adds/removes urls from my DarkReader.json pywal16 template disabledFor section (derived from https://github.com/eylles/pywal-extra/blob/master/templates/darkreader/darkreader.json), because adding them manually is a huge pain
 
 ### usage:
 
