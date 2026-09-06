@@ -1,1 +1,1 @@
-scripts i made to make my life easier
+sh scripts i made to make my life easier
