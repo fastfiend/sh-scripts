@@ -32,7 +32,6 @@ crop-img "$img" "out.jpg" ${3:-Center} || exit $?
 
 ffmpeg -i "$2" -i out.jpg -map 0:a -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Front Cover" -metadata:s:v comment="Cover (front)" "${2%.*}1.mp3"
 
-
 [ -f cover.jpg ] && rm cover.jpg
 
 if [ $(command -v trash-put) ]; then
